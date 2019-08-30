@@ -4,18 +4,46 @@
 import time
 import csv
 
+
+#profile function for a user which will show user details
+def profile(userid):
+    print("We are happy you are with us\n")
+    print("We welcome you to our world\n")
+
+
+
 #login function for login a user into its profile
 def login():
-    print("Welcome to logn console user \n\t")
+    print("Welcome to login console user \n\t")
+    username = input("USERNAME:")
+    if (username == 'matches to database'):
+        password = input("\n\tEnter your password")
+        if (password == 'matches'):
+            print("\n\n\tWelcome user")
+            profile(userid)
+        else:
+            print("\n---------What! Wrong password user------------")
+    else:
+        print("\nYour account doesn't exist "+username)
 
 
 
 #signup function to create a user and give access to use to use our services
-
+def signup():
+    print('''Welcome to signup Here you can create an account for yourself and enjoy our services''')
+    name = input("\tEnter you Name\t\t")
+    email = input("\tEnter your Email\t")
+    password = input("\tCreate a password\t")
+    query = "insert into user_data values (name,email,password)"
+    #query.execute()
+    
 
 
 #about function to let user know about this project
-
+def about():
+    print('''\tThis is a practice project before some exam 
+            I just want to have hands on experience on python before
+            executing python script file in real environment.\n''')
 
 
 
@@ -24,7 +52,7 @@ def login():
 def home():
     print('Welcome to Net Banking and enjoy the services')
     print('You can choose from below to proceed further\n\t1. Login (if already have account)\n\t2. Signup (for new user) \n\t3. About this project')
-    choice = int(input('Enter a chioce You want'))
+    choice = int(input('Enter a chioce You want\t'))
     if choice==1:
         login()
     elif choice==2:

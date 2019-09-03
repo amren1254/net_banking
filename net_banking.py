@@ -3,28 +3,54 @@
 #importing necessary libraries
 import time
 import csv
+import psycopg2 # importing psycopg2 driver library to make connection with postgres database.
 
+try:
+    conn = psycopg2.connect(user = "amren",
+            password = "amren",
+            host = "localhost",
+            port = "5432",
+            database = "tutree")
+    cursor = conn.cursor()
+    cursor.execute("select version()")
+    record = cursor.fetchone()
+    print("You are connected to ",record,"\n")
+except(Exception,psycopg2.Error) as error:
+    print("Error while connecting to database")
+finally:
+    if(conn):
+        cursor.close()
+        conn.close()
+        print("Postgresql connection closed")
 
 #profile function for a user which will show user details
 def profile(userid):
-    print("We are happy you are with us\n")
-    print("We welcome you to our world\n")
+    print("\tWe are happy you are with us\n")
+    print("\tWe welcome you to our world\n")
 
 
 
 #login function for login a user into its profile
 def login():
     print("Welcome to login console user \n\t")
-    username = input("USERNAME:")
-    if (username == 'matches to database'):
-        password = input("\n\tEnter your password")
-        if (password == 'matches'):
-            print("\n\n\tWelcome user")
+    username = input("\tUSERNAME:  ")
+    if (username == 'amren'):
+        password = input("\n\tPASSWORD:  ")
+        if (password == 'amren'):
+            userid = 1
+            print("\n\tWelcome user")
             profile(userid)
         else:
             print("\n---------What! Wrong password user------------")
     else:
         print("\nYour account doesn't exist "+username)
+#function to validate email 
+def validate_email():
+    email = input("Enter your email: ")
+    #if email == 
+
+
+#function for checking password strength
 
 
 

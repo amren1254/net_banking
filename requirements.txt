@@ -1,0 +1,7 @@
+python3
+pip3
+csv
+time
+psycopg2
+termcolor
+

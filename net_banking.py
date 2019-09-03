@@ -1,27 +1,32 @@
-'''This is the new version of formerly created first.py in which I am trying to write the same software which will run on python3 '''
+'''This is the new version of formerly created first.py in which 
+I am trying to write the same software which will run on python3 '''
 
 #importing necessary libraries
-import time
-import csv
+import time     #importing time library to make delays and store user creation time in database.
+import csv      # importing csv library as used in older version of code to store user data 
+#but I am using postgresql database in this one to store user data.
 import psycopg2 # importing psycopg2 driver library to make connection with postgres database.
+from termcolor import colored
 
+
+#handling connection to the postgres database
 try:
     conn = psycopg2.connect(user = "amren",
             password = "amren",
             host = "localhost",
             port = "5432",
             database = "tutree")
-    cursor = conn.cursor()
-    cursor.execute("select version()")
+    cursor = conn.cursor()      #creating cursor for the database to perform operation on database 
+    cursor.execute("select version()")  #executing the first query
     record = cursor.fetchone()
-    print("You are connected to ",record,"\n")
+    print("You are connected to ",record,"\n")  #printed the first query result
 except(Exception,psycopg2.Error) as error:
     print("Error while connecting to database")
 finally:
     if(conn):
-        cursor.close()
+        cursor.close()      #closing connection to database
         conn.close()
-        print("Postgresql connection closed")
+        print(colored("Postgresql connection closed","red"))
 
 #profile function for a user which will show user details
 def profile(userid):
@@ -41,7 +46,7 @@ def login():
             print("\n\tWelcome user")
             profile(userid)
         else:
-            print("\n---------What! Wrong password user------------")
+            print("\n---------What! Wrong password "+ username +"------------")
     else:
         print("\nYour account doesn't exist "+username)
 #function to validate email 
@@ -51,6 +56,8 @@ def validate_email():
 
 
 #function for checking password strength
+def validate_password():
+    print("I will write code to validate password in this function.")
 
 
 
@@ -76,16 +83,23 @@ def about():
 
 # home function or index function which will be executed at first the program executed.
 def home():
-    print('Welcome to Net Banking and enjoy the services')
-    print('You can choose from below to proceed further\n\t1. Login (if already have account)\n\t2. Signup (for new user) \n\t3. About this project')
-    choice = int(input('Enter a chioce You want\t'))
-    if choice==1:
-        login()
-    elif choice==2:
-        signup()
-    elif choice==3:
-        about()
-    else:
-        print('----Hey wrong input given----\n\tProgram will exit after 2 second')
-        time.sleep(2)
-home()
+    while True:
+        print(colored('Welcome to Net Banking and enjoy the services','green'))
+        print('You can choose from below to proceed further\n\t1. Login (if already have account)\n\t2. Signup (for new user) \n\t3. About this project')
+        choice = input('Enter a chioce You want\t')
+        try:
+            choice = int(choice)
+            if choice==1:
+                login()
+            elif choice==2:
+                signup()
+            elif choice==3:
+                about()
+            else:
+                print('----Hey wrong input given----\n\tProgram will exit after 2 second')
+                break
+        except:
+            print(colored("Wrong Input","red",attrs = ['reverse','blink']))
+            time.sleep(2)
+            break
+home()  #called home function to execute first and run the program eventually

@@ -63,49 +63,48 @@ def validate_email():
     if (re.search(regex,email)):
         return email
     else:
-        print("Invalid Email")
+        print(colored("\tInvalid Email","red"))
         validate_email()
 
 
 #function for checking password strength
 def validate_password():
     password = input("\tEnter password\t")
-    SpecialSym =['$', '@', '#', '%']
-
-    if len(password) < 6:
-        print('length should be at least 6')
+    flag = 0
+    while True:   
+        if (len(password)<8): 
+            flag = -1
+            break
+        elif not re.search("[a-z]", password): 
+            flag = -1
+            break
+        elif not re.search("[A-Z]", password): 
+            flag = -1
+            break
+        elif not re.search("[0-9]", password): 
+            flag = -1
+            break
+        elif not re.search("[_@$]", password): 
+            flag = -1
+            break
+        elif re.search("\s", password): 
+            flag = -1
+            break
+        else: 
+            flag = 0
+            return password
+            break
+  
+    if flag ==-1: 
+        print(colored("\tNot a Valid Password","red"))
         validate_password()
-
-    if len(password) > 20:
-        print('length should be not be greater than 8')
-        validate_password()
-    
-    if not any(char.isdigit() for char in password):
-        print('Password should have at least one numeral')
-        validate_password()
-
-    if not any(char.isupper() for char in password):
-        print('Password should have at least one uppercase letter')
-        validate_password()
-
-    if not any(char.islower() for char in password):
-        print('Password should have at least one lowercase letter')
-        validate_password()
-
-    if not any(char in SpecialSym for char in password):
-        print('Password should have at least one of the symbols $@#')
-        validate_password()
-    else:
-        #print("I will write code to validate password in this function.")
-        return password
-
 
 #signup function to create a user and give access to use to use our services
 def signup():
     print('''Welcome to signup Here you can create an account for yourself and enjoy our services''')
     name = input("\tEnter you Name\t\t")
-    validate_email()
-    validate_password()
+    email = validate_email()
+    password = validate_password()
     #query = "insert into netbanking values (1,name,email,password)"
     #handling connection to the postgres database
     connection()

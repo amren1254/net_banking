@@ -9,6 +9,7 @@ import csv      # importing csv library as used in older version of code to stor
 import psycopg2 # importing psycopg2 driver library to make connection with postgres database.
 from termcolor import colored
 import webbrowser
+import re
 
 import os
 
@@ -57,22 +58,54 @@ def login():
         print("\nYour account doesn't exist "+username)
 #function to validate email 
 def validate_email():
-    email = input("Enter your email: ")
-    #if email == 
+    email = input("\tEnter your Email\t")
+    regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    if (re.search(regex,email)):
+        return email
+    else:
+        print("Invalid Email")
+        validate_email()
 
 
 #function for checking password strength
 def validate_password():
-    print("I will write code to validate password in this function.")
+    password = input("\tEnter password\t")
+    SpecialSym =['$', '@', '#', '%']
 
+    if len(password) < 6:
+        print('length should be at least 6')
+        validate_password()
+
+    if len(password) > 20:
+        print('length should be not be greater than 8')
+        validate_password()
+    
+    if not any(char.isdigit() for char in password):
+        print('Password should have at least one numeral')
+        validate_password()
+
+    if not any(char.isupper() for char in password):
+        print('Password should have at least one uppercase letter')
+        validate_password()
+
+    if not any(char.islower() for char in password):
+        print('Password should have at least one lowercase letter')
+        validate_password()
+
+    if not any(char in SpecialSym for char in password):
+        print('Password should have at least one of the symbols $@#')
+        validate_password()
+    else:
+        #print("I will write code to validate password in this function.")
+        return password
 
 
 #signup function to create a user and give access to use to use our services
 def signup():
     print('''Welcome to signup Here you can create an account for yourself and enjoy our services''')
     name = input("\tEnter you Name\t\t")
-    email = input("\tEnter your Email\t")
-    password = input("\tCreate a password\t")
+    validate_email()
+    validate_password()
     #query = "insert into netbanking values (1,name,email,password)"
     #handling connection to the postgres database
     connection()

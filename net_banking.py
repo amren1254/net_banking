@@ -13,32 +13,24 @@ import re
 
 import os
 
-
-def connection():
-    try:
-        conn = psycopg2.connect(user = "amren",
-                password = "amren",
-                host = "localhost",
-                port = "5432",
-                database = "tutree")
-        cursor = conn.cursor()      #creating cursor for the database to perform operation on database 
-        #cursor.execute("select version()")  #executing the first query
-               #record = cursor.fetchone()
-        #print("You are connected to ",record,"\n")  #printed the first query result
-    except(Exception,psycopg2.Error) as error:
+try:
+    conn = psycopg2.connect(user = "amren",
+            password = "amren",
+            host = "localhost",
+            port = "5432",
+            database = "tutree")
+    cursor = conn.cursor()      #creating cursor for the database to perform operation on database 
+    #cursor.execute("select version()")  #executing the first query
+    #record = cursor.fetchone()
+    #print("You are connected to ",record,"\n")  #printed the first query result
+except(Exception,psycopg2.Error) as error:
         print(colored("Error while connecting to database","red"))
-    finally:
-        if(conn):
-            cursor.close()      #closing connection to database
-            conn.close()
-            print(colored("Postgresql connection closed","red"))
-
 
 
 #profile function for a user which will show user details
 def profile(userid):
-    print("\tWe are happy you are with us\n")
-    print("\tWe welcome you to our world\n")
+    print(colored("\tWe are happy you are with us\n","yellow"))
+    print(colored("\tWe welcome you to our world\n","yellow"))
 
 
 
@@ -107,7 +99,6 @@ def signup():
     password = validate_password()
     #query = "insert into netbanking values (1,name,email,password)"
     #handling connection to the postgres database
-    connection()
     sql = "insert into netbanking values(%s,%s,%s)"
     record_to_insert = (name,email,password)
     cursor.execute(sql,record_to_insert)
@@ -129,21 +120,22 @@ def about():
 def home():
     while True:
         print(colored('Welcome to Net Banking and enjoy the services','green'))
-        print('You can choose from below to proceed further\n\t1. Login (if already have account)\n\t2. Signup (for new user) \n\t3. About this project')
-        choice = input('Enter a chioce You want\t')
+        print('''You can choose from below to proceed further
+                1. Login (if already have account)
+                2. Signup (for new user) 
+                3. About this project
+                ** Press e/E to exit''')
+        choice = input('Enter a chioce You want \t')
         try:
             choice = int(choice)
             if choice==1:
                 login()
-            elif choice==2:
+            if choice==2:
                 signup()
-            elif choice==3:
+            if choice==3:
                 about()
-            else:
-                print('----Hey wrong input given----\n\tProgram will exit after 2 second')
-                break
         except:
-            print(colored("Wrong Input","red",attrs = ['reverse','blink']))
+            print(colored("Program terminating","red",attrs = ['reverse','blink']))
             time.sleep(2)
             break
 home()  #called home function to execute first and run the program eventually

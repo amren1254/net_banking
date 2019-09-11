@@ -2,7 +2,7 @@
 '''This is the new version of formerly created first.py in which 
 I am trying to write the same software which will run on python3 '''
 
-#importing necessary libraries
+'''importing necessary libraries'''
 import time     #importing time library to make delays and store user creation time in database.
 import csv      # importing csv library as used in older version of code to store user data 
 #but I am using postgresql database in this one to store user data.

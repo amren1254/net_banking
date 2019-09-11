@@ -27,7 +27,7 @@ except(Exception,psycopg2.Error) as error:
         print(colored("Error while connecting to database","red"))
 
 
-#profile function for a user which will show user details
+'''profile function for a user which will show user details'''
 def profile(userid):
     print(colored("\tWe are happy you are with us\n","yellow"))
     print(colored("\tWe welcome you to our world\n","yellow"))

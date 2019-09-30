@@ -38,6 +38,8 @@ def profile(userid):
 def login():
     print("Welcome to login console user \n\t")
     username = input("\tUSERNAME:  ")
+    select_query = "SELECT * FROM netbanking where username = %s"
+    data_to_fetch = (select_query, username)
     if (username == 'amren'):
         password = input("\n\tPASSWORD:  ")
         if (password == 'amren'):
@@ -99,9 +101,9 @@ def signup():
     password = validate_password()
     #query = "insert into netbanking values (1,name,email,password)"
     #handling connection to the postgres database
-    sql = "insert into netbanking values(%s,%s,%s)"
+    insert_query = "insert into netbanking values(%s,%s,%s)"
     record_to_insert = (name,email,password)
-    cursor.execute(sql,record_to_insert)
+    cursor.execute(insert_query,record_to_insert)
     conn.commit()
 
 

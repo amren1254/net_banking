@@ -47,3 +47,5 @@ def send_mail():
         server.sendmail(
             sender_email, receiver_email, message.as_string()
         )
+
+send_mail()
